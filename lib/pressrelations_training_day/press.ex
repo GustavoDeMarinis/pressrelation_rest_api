@@ -4,12 +4,19 @@ defmodule PressrelationsTrainingDay.Press do
 
   alias PressrelationsTrainingDay.Press.News
   alias PressrelationsTrainingDay.Press.Tag
+  alias PressrelationsTrainingDay.Press.News_Tag
 
   def list_news do
-    Repo.all(News)
+    Repo.all(from new in News, preload: [:news_tags, news_tags: :tags])
   end
 
-  def get_news!(id), do: Repo.get!(News, id)
+  def get_news!(id) do
+    news =
+      Repo.get!(News, id)
+      |> Repo.preload([:news_tags, news_tags: :tags])
+
+    news
+  end
 
   def create_news(attrs \\ %{}) do
     %News{}
@@ -18,12 +25,6 @@ defmodule PressrelationsTrainingDay.Press do
   end
 
   def update_news(%News{} = news, attrs) do
-    IO.inspect("ACAAAAAAAAAAAAAA")
-    IO.inspect(news)
-    IO.inspect("----------------")
-    IO.inspect(attrs)
-    IO.inspect("ACAAAAAAAAAAAAAA")
-
     news
     |> News.changeset(attrs)
     |> Repo.update()
@@ -85,6 +86,22 @@ defmodule PressrelationsTrainingDay.Press do
 
   def delete_news_tag(%News_Tag{} = news__tag) do
     Repo.delete(news__tag)
+  end
+
+  def news_tags(%News{news_tags: tags}) do
+    Enum.flat_map(tags, &news_tag_press_tags/1)
+  end
+
+  def news_tags(_) do
+    []
+  end
+
+  def news_tag_press_tags(%News_Tag{tags: %Tag{name: name, id: id}}) do
+    [%{id: id, name: name}]
+  end
+
+  def news_tag_press_tags(_) do
+    []
   end
 
   def change_news_tag(%News_Tag{} = news__tag, attrs \\ %{}) do
