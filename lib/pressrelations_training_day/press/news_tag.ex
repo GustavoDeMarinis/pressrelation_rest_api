@@ -1,10 +1,10 @@
 defmodule PressrelationsTrainingDay.Press.News_Tag do
   use Ecto.Schema
   import Ecto.Changeset
-
+  alias PressrelationsTrainingDay.Press
+  @primary_key {:news_id, :id, autogenerate: true}
   schema "news_tags" do
-    belongs_to(:news, PressrelationsTrainingDay.Press.News)
-    belongs_to(:tags, PressrelationsTrainingDay.Press.Tag)
+    belongs_to :tags, Press.Tag, foreign_key: :tag_id
   end
 
   @doc false

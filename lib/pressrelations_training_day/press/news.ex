@@ -1,13 +1,15 @@
 defmodule PressrelationsTrainingDay.Press.News do
   use Ecto.Schema
   import Ecto.Changeset
+  alias PressrelationsTrainingDay.Press
 
+  @foreign_key_type :interger
   schema "news" do
-    field(:headline, :string)
-    field(:date, :utc_datetime_usec)
-    field(:publication, :string)
-    field(:text, :string)
-    has_many(:news_tags, PressrelationsTrainingDay.Press.News_Tag)
+    field :headline, :string
+    field :date, :utc_datetime_usec
+    field :publication, :string
+    field :text, :string
+    has_many :news_tags, Press.News_Tag, references: :id
   end
 
   @doc false

@@ -1,10 +1,12 @@
 defmodule PressrelationsTrainingDay.Press.Tag do
   use Ecto.Schema
   import Ecto.Changeset
+  alias PressrelationsTrainingDay.Press
 
+  @foreign_key_type :interger
   schema "tags" do
-    field(:name, :string)
-    has_many(:news_tags, PressrelationsTrainingDay.Press.News_Tag)
+    field :name, :string
+    has_many :news_tags, Press.News_Tag, references: :id
   end
 
   @doc false
