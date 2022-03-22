@@ -1,0 +1,32 @@
+<h1>Listing News</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Headline</th>
+      <th>Text</th>
+      <th>Publication</th>
+      <th>Date</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for news <- @news do %>
+    <tr>
+      <td><%= news.headline %></td>
+      <td><%= news.text %></td>
+      <td><%= news.publication %></td>
+      <td><%= news.date %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.news_path(@conn, :show, news) %></span>
+        <span><%= link "Edit", to: Routes.news_path(@conn, :edit, news) %></span>
+        <span><%= link "Delete", to: Routes.news_path(@conn, :delete, news), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New News", to: Routes.news_path(@conn, :new) %></span>

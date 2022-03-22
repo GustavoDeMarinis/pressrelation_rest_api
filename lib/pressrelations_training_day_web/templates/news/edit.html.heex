@@ -1,0 +1,5 @@
+<h1>Edit News</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.news_path(@conn, :update, @news)) %>
+
+<span><%= link "Back", to: Routes.news_path(@conn, :index) %></span>

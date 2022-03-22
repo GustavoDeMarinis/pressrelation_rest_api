@@ -2,22 +2,24 @@ defmodule PressrelationsTrainingDayWeb.Router do
   use PressrelationsTrainingDayWeb, :router
 
   pipeline :browser do
-    plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_live_flash
-    plug :put_root_layout, {PressrelationsTrainingDayWeb.LayoutView, :root}
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
+    plug(:accepts, ["html"])
+    plug(:fetch_session)
+    plug(:fetch_live_flash)
+    plug(:put_root_layout, {PressrelationsTrainingDayWeb.LayoutView, :root})
+    # plug(:protect_from_forgery)
+    # plug(:put_secure_browser_headers)
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug(:accepts, ["json"])
   end
 
   scope "/", PressrelationsTrainingDayWeb do
-    pipe_through :browser
+    pipe_through(:browser)
 
-    get "/", PageController, :index
+    get("/", PageController, :index)
+    resources("/news", NewsController, except: [:new, :edit])
+    resources("/tags", TagController, except: [:new, :edit])
   end
 
   # Other scopes may use custom stacks.
@@ -36,9 +38,9 @@ defmodule PressrelationsTrainingDayWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/" do
-      pipe_through :browser
+      pipe_through(:browser)
 
-      live_dashboard "/dashboard", metrics: PressrelationsTrainingDayWeb.Telemetry
+      live_dashboard("/dashboard", metrics: PressrelationsTrainingDayWeb.Telemetry)
     end
   end
 
@@ -48,9 +50,9 @@ defmodule PressrelationsTrainingDayWeb.Router do
   # node running the Phoenix server.
   if Mix.env() == :dev do
     scope "/dev" do
-      pipe_through :browser
+      pipe_through(:browser)
 
-      forward "/mailbox", Plug.Swoosh.MailboxPreview
+      forward("/mailbox", Plug.Swoosh.MailboxPreview)
     end
   end
 end
