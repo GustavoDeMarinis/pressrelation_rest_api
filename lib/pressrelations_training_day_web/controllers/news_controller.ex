@@ -3,8 +3,6 @@ defmodule PressrelationsTrainingDayWeb.NewsController do
 
   alias PressrelationsTrainingDay.Press
   alias PressrelationsTrainingDay.Press.News
-  alias PressrelationsTrainingDay.Press.Tag
-  alias PressrelationsTrainingDay.Press.News_Tag
 
   action_fallback(PressrelationsTrainingDayWeb.FallbackController)
 
@@ -20,6 +18,8 @@ defmodule PressrelationsTrainingDayWeb.NewsController do
       |> put_resp_header("location", Routes.news_path(conn, :show, news))
       |> render("show.json", news: news)
     end
+
+    conn
   end
 
   def show_tags(conn, %{"id" => id}) do
