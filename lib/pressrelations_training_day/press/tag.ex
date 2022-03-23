@@ -6,7 +6,7 @@ defmodule PressrelationsTrainingDay.Press.Tag do
   @foreign_key_type :interger
   schema "tags" do
     field :name, :string
-    has_many :news_tags, Press.News_Tag, references: :id
+    has_many :news_tags, Press.News_Tag, references: :id, on_delete: :nilify_all
   end
 
   @doc false

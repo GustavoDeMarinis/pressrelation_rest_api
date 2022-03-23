@@ -9,7 +9,7 @@ defmodule PressrelationsTrainingDay.Press.News do
     field :date, :utc_datetime_usec
     field :publication, :string
     field :text, :string
-    has_many :news_tags, Press.News_Tag, references: :id
+    has_many :news_tags, Press.News_Tag, references: :id, on_delete: :delete_all
   end
 
   @doc false
