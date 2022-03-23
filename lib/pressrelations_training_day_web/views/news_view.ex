@@ -1,6 +1,7 @@
 defmodule PressrelationsTrainingDayWeb.NewsView do
   use PressrelationsTrainingDayWeb, :view
   alias PressrelationsTrainingDayWeb.NewsView
+  alias PressrelationsTrainingDayWeb.TagView
 
   alias PressrelationsTrainingDay.Press
 
@@ -10,6 +11,10 @@ defmodule PressrelationsTrainingDayWeb.NewsView do
 
   def render("show.json", %{news: news}) do
     %{data: render_one(news, NewsView, "news.json")}
+  end
+
+  def render("show_tag.json", %{tags: tags}) do
+    %{data: render_many(tags, TagView, "tag.json")}
   end
 
   def render("news.json", %{news: news}) do

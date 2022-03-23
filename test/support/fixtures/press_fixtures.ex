@@ -1,12 +1,4 @@
 defmodule PressrelationsTrainingDay.PressFixtures do
-  @moduledoc """
-  This module defines test helpers for creating
-  entities via the `PressrelationsTrainingDay.Press` context.
-  """
-
-  @doc """
-  Generate a news.
-  """
   def news_fixture(attrs \\ %{}) do
     {:ok, news} =
       attrs
@@ -21,9 +13,6 @@ defmodule PressrelationsTrainingDay.PressFixtures do
     news
   end
 
-  @doc """
-  Generate a tag.
-  """
   def tag_fixture(attrs \\ %{}) do
     {:ok, tag} =
       attrs

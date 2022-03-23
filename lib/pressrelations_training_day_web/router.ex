@@ -20,6 +20,7 @@ defmodule PressrelationsTrainingDayWeb.Router do
     get("/", PageController, :index)
     resources("/news", NewsController, except: [:new, :edit])
     resources("/tags", TagController, except: [:new, :edit])
+    get "/news/:id/tags", NewsController, :show_tags
   end
 
   # Other scopes may use custom stacks.

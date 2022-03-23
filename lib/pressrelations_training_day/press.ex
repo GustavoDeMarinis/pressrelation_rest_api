@@ -18,10 +18,16 @@ defmodule PressrelationsTrainingDay.Press do
     news
   end
 
-  def create_news(attrs \\ %{}) do
-    %News{}
-    |> News.changeset(attrs)
-    |> Repo.insert()
+  def create_news(%{"tags" => tags} = attrs \\ %{}) do
+    tag_id_list = Enum.map(tags, fn tag -> create_tag(tag) end)
+
+    {:ok, %News{id: news_id}} =
+      %News{}
+      |> Repo.preload(:news_tags)
+      |> News.changeset(attrs)
+      |> Repo.insert()
+
+    Enum.map(tag_id_list, fn tag_id -> create_news_tag(%{tag_id: tag_id, news_id: news_id}) end)
   end
 
   def update_news(%News{} = news, attrs) do
@@ -44,10 +50,22 @@ defmodule PressrelationsTrainingDay.Press do
 
   def get_tag!(id), do: Repo.get!(Tag, id)
 
-  def create_tag(attrs \\ %{}) do
-    %Tag{}
-    |> Tag.changeset(attrs)
-    |> Repo.insert()
+  def create_tag(value \\ %{}) do
+    tags = Repo.all(Tag)
+
+    case Enum.any?(tags, fn tag -> tag.name == value end) do
+      false ->
+        {:ok, %Tag{id: tag_id}} =
+          %Tag{}
+          |> Tag.changeset(%{name: value})
+          |> Repo.insert()
+
+        tag_id
+
+      true ->
+        matched_tag = Enum.find(tags, fn tag -> tag.name == value end)
+        matched_tag.id
+    end
   end
 
   def update_tag(%Tag{} = tag, attrs) do
@@ -64,8 +82,6 @@ defmodule PressrelationsTrainingDay.Press do
     Tag.changeset(tag, attrs)
   end
 
-  alias PressrelationsTrainingDay.Press.News_Tag
-
   def list_news_tags do
     Repo.all(News_Tag)
   end
@@ -73,19 +89,21 @@ defmodule PressrelationsTrainingDay.Press do
   def get_news_tag!(id), do: Repo.get!(News_Tag, id)
 
   def create_news_tag(attrs \\ %{}) do
+    IO.inspect(attrs)
+
     %News_Tag{}
     |> News_Tag.changeset(attrs)
     |> Repo.insert()
   end
 
-  def update_news_tag(%News_Tag{} = news__tag, attrs) do
-    news__tag
+  def update_news_tag(%News_Tag{} = news_tag, attrs) do
+    news_tag
     |> News_Tag.changeset(attrs)
     |> Repo.update()
   end
 
-  def delete_news_tag(%News_Tag{} = news__tag) do
-    Repo.delete(news__tag)
+  def delete_news_tag(%News_Tag{} = news_tag) do
+    Repo.delete(news_tag)
   end
 
   def news_tags(%News{news_tags: tags}) do
