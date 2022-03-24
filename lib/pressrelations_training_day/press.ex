@@ -19,15 +19,23 @@ defmodule PressrelationsTrainingDay.Press do
   end
 
   def create_news(%{"tags" => tags} = attrs \\ %{}) do
-    tag_id_list = Enum.map(tags, fn tag -> create_tag(tag) end)
-
     {:ok, %News{id: news_id}} =
       %News{}
       |> Repo.preload(:news_tags)
       |> News.changeset(attrs)
       |> Repo.insert()
 
-    Enum.map(tag_id_list, fn tag_id -> create_news_tag(%{tag_id: tag_id, news_id: news_id}) end)
+    case Enum.empty?(tags) do
+      false ->
+        tag_id_list = Enum.map(tags, fn tag -> create_tag(tag) end)
+
+        Enum.map(tag_id_list, fn tag_id ->
+          create_news_tag(%{tag_id: tag_id, news_id: news_id})
+        end)
+
+      true ->
+        nil
+    end
   end
 
   def update_news(%News{} = news, attrs) do

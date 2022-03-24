@@ -16,7 +16,7 @@ defmodule PressrelationsTrainingDayWeb.NewsController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.news_path(conn, :show, news))
-      |> render("show.json", news: news)
+      |> render("index.json", news: news)
     end
 
     conn

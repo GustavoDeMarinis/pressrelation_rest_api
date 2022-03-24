@@ -12,6 +12,6 @@ defmodule PressrelationsTrainingDay.Press.News_Tag do
   def changeset(news_tag, attrs) do
     news_tag
     |> cast(attrs, [:news_id, :tag_id])
-    |> validate_required([])
+    |> validate_required([:news_id, :tag_id])
   end
 end
