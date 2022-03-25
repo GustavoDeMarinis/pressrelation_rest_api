@@ -19,11 +19,14 @@ defmodule PressrelationsTrainingDay.Press do
   end
 
   def create_news(%{"tags" => tags} = attrs \\ %{}) do
-    {:ok, %News{id: news_id}} =
+    news =
       %News{}
       |> Repo.preload(:news_tags)
+      |> IO.inspect()
       |> News.changeset(attrs)
       |> Repo.insert()
+
+    {:ok, %News{id: news_id}} = news
 
     case Enum.empty?(tags) do
       false ->
@@ -36,6 +39,9 @@ defmodule PressrelationsTrainingDay.Press do
       true ->
         nil
     end
+
+    IO.inspect(news)
+    news
   end
 
   def update_news(%News{} = news, attrs) do

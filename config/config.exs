@@ -12,8 +12,12 @@ config :pressrelations_training_day,
 
 # Configures the endpoint
 config :pressrelations_training_day, PressrelationsTrainingDayWeb.Endpoint,
-  url: [host: "localhost"],
-  render_errors: [view: PressrelationsTrainingDayWeb.ErrorView, accepts: ~w(html json), layout: false],
+  url: [host: "localho.st"],
+  render_errors: [
+    view: PressrelationsTrainingDayWeb.ErrorView,
+    accepts: ~w(html json),
+    layout: false
+  ],
   pubsub_server: PressrelationsTrainingDay.PubSub,
   live_view: [signing_salt: "O7W9pR6C"]
 
@@ -24,7 +28,8 @@ config :pressrelations_training_day, PressrelationsTrainingDayWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :pressrelations_training_day, PressrelationsTrainingDay.Mailer, adapter: Swoosh.Adapters.Local
+config :pressrelations_training_day, PressrelationsTrainingDay.Mailer,
+  adapter: Swoosh.Adapters.Local
 
 # Swoosh API client is needed for adapters other than SMTP.
 config :swoosh, :api_client, false

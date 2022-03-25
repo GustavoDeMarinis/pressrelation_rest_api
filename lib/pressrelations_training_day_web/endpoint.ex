@@ -47,4 +47,5 @@ defmodule PressrelationsTrainingDayWeb.Endpoint do
   plug Plug.Head
   plug Plug.Session, @session_options
   plug PressrelationsTrainingDayWeb.Router
+  plug Corsica, origins: "http://localhost:3000"
 end

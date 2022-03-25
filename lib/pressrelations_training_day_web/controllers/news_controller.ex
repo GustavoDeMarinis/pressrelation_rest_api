@@ -4,11 +4,16 @@ defmodule PressrelationsTrainingDayWeb.NewsController do
   alias PressrelationsTrainingDay.Press
   alias PressrelationsTrainingDay.Press.News
 
+  import Plug.Conn
+
   action_fallback(PressrelationsTrainingDayWeb.FallbackController)
 
   def index(conn, _params) do
     news = Press.list_news()
-    render(conn, "index.json", news: news)
+
+    conn
+    |> render("index.json", news: news)
+    |> halt()
   end
 
   def create(conn, %{"news" => news_params}) do
@@ -16,10 +21,8 @@ defmodule PressrelationsTrainingDayWeb.NewsController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.news_path(conn, :show, news))
-      |> render("index.json", news: news)
+      |> render("show.json", news: news)
     end
-
-    conn
   end
 
   def show_tags(conn, %{"id" => id}) do
