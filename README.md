@@ -1,4 +1,8 @@
 # PressrelationsTrainingDay
+To  start postgres server:
+
+ * sudo sudo service postgresql stop
+ * run docker-compose up
 
 To start your Phoenix server:
 
@@ -6,7 +10,16 @@ To start your Phoenix server:
   * Create and migrate your database with `mix ecto.setup`
   * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+To start Front-end Server
+ * cd frontend
+ * yarn dev
+
+To make API calls with both front and back running locally:
+ * run ps aux | grep chrome | awk '{ print $2 }' 
+ * sudo kill all the process 
+ * run chrome without cors security google-chrome --disable-web-security --user-data-dir=".config/google-chrome"
+
+Now you can visit [`localhost:3000`](http://localhost:3000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
