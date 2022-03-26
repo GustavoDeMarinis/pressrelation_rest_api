@@ -19,7 +19,7 @@ To make API calls with both front and back running locally:
  * sudo kill all the process 
  * run chrome without cors security google-chrome --disable-web-security --user-data-dir=".config/google-chrome"
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+Now you can visit [`localhost:3000`](http://localhost:3000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
