@@ -12,7 +12,7 @@ config :pressrelations_training_day,
 
 # Configures the endpoint
 config :pressrelations_training_day, PressrelationsTrainingDayWeb.Endpoint,
-  url: [host: "localho.st"],
+  url: [host: "localhost"],
   render_errors: [
     view: PressrelationsTrainingDayWeb.ErrorView,
     accepts: ~w(html json),
